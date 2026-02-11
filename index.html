@@ -252,10 +252,7 @@ let coaches=[
 
 let currentDay="ПН";
 
-function saveData(){
-localStorage.setItem("schedule",JSON.stringify(schedule));
-localStorage.setItem("coaches",JSON.stringify(coaches));
-}
+
 
 /* ===== WEEK ===== */
 function renderWeek(){
@@ -272,18 +269,12 @@ w.appendChild(div);
 
 /* ===== TABLE ===== */
 function renderTable(){
-const t=document.getElementById("scheduleTable");
-t.innerHTML="";
-
-schedule[currentDay].forEach((item,i)=>{
 t.innerHTML+=`
 <tr>
 <td>${item.date}</td>
 <td>${item.time}</td>
 <td>${item.coach}</td>
-<td>
-${isAdmin ? `<div class="delete-btn" onclick="deleteTraining('${currentDay}', ${i})">Удалить</div>` : ``}
-</td>
+<td></td>
 </tr>`;
 });
 renderBanner();
@@ -319,29 +310,29 @@ document.getElementById("nextTraining").innerHTML=
 
 /* ===== COACHES ===== */
 function renderCoaches(){
-const list=document.getElementById("coachList");
-list.innerHTML="";
-coaches.forEach((c,i)=>{
 list.innerHTML+=`
 <div class="trainer">
 <img src="${c.img}">
 <h3>${c.name}</h3>
 <p>Возраст: ${c.age}</p>
 <p>${c.desc}</p>
-${isAdmin ? `<div class="delete-btn" onclick="deleteCoach(${i})">Удалить</div>` : ``}
 </div>`;
 });
 }
 
 saveData();
+renderWeek();
+renderTable();
 renderCoaches();
 alert("Тренер добавлен");
-}
+
+
 
 </script>
 
 
 </body>
 </html>
+
 
 
