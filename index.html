@@ -173,7 +173,7 @@ cursor:pointer;
 <body>
 
 <header>
-<div class="logo" onclick="secretClick()">САМБО - МЕТРО</div>
+<div class="logo" >САМБО - МЕТРО</div>
 <div class="burger" onclick="toggleMenu()">☰</div>
 </header>
 
@@ -268,7 +268,11 @@ w.appendChild(div);
 }
 
 /* ===== TABLE ===== */
-function renderTable(){
+function renderTablefunction renderTable(){
+const t=document.getElementById("scheduleTable");
+t.innerHTML="";
+
+schedule[currentDay].forEach(item=>{
 t.innerHTML+=`
 <tr>
 <td>${item.date}</td>
@@ -277,8 +281,10 @@ t.innerHTML+=`
 <td></td>
 </tr>`;
 });
+
 renderBanner();
 }
+
 
 function renderBanner(){
 
@@ -310,6 +316,10 @@ document.getElementById("nextTraining").innerHTML=
 
 /* ===== COACHES ===== */
 function renderCoaches(){
+const list=document.getElementById("coachList");
+list.innerHTML="";
+
+coaches.forEach(c=>{
 list.innerHTML+=`
 <div class="trainer">
 <img src="${c.img}">
@@ -320,19 +330,15 @@ list.innerHTML+=`
 });
 }
 
-saveData();
 renderWeek();
 renderTable();
 renderCoaches();
-alert("Тренер добавлен");
-
-
 
 </script>
 
-
 </body>
 </html>
+
 
 
 
