@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Самбо - Метро</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--red:#c40010;
+--dark:#0f0f14;
+--card:#1a1a22;
+--gray:#2b2b35;
+--yellow:#f2b705;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+
+body{background:var(--dark);color:white;}
+
+header{
+position:fixed;
+top:0;
+width:100%;
+background:linear-gradient(90deg,#7a0008,var(--red));
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px;
+z-index:1000;
+}
+
+.logo{font-weight:700;cursor:pointer;}
+.burger{font-size:22px;cursor:pointer;}
+
+nav{
+position:fixed;
+top:0;
+right:-100%;
+width:70%;
+height:100%;
+background:#111;
+padding:90px 25px;
+transition:0.3s;
+}
+nav.active{right:0;}
+nav a{
+display:block;
+margin:20px 0;
+color:white;
+text-decoration:none;
+font-weight:600;
+}
+
+section{padding:95px 20px 50px;}
+h2{margin-bottom:20px;font-weight:700;}
+
+.banner{
+background:linear-gradient(145deg,#7a0008,var(--red));
+padding:25px;
+border-radius:16px;
+margin-bottom:25px;
+}
+.banner button{
+margin-top:15px;
+width:100%;
+padding:14px;
+border:none;
+background:var(--yellow);
+font-weight:700;
+border-radius:10px;
+cursor:pointer;
+}
+
+.week{display:flex;overflow-x:auto;margin-bottom:15px;}
+.week div{
+padding:10px 14px;
+background:var(--gray);
+margin-right:8px;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+}
+.week .active{background:var(--red);}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:var(--card);
+border-radius:12px;
+overflow:hidden;
+font-size:13px;
+}
+th{background:var(--red);padding:10px;}
+td{border-top:1px solid #2b2b35;padding:10px;text-align:center;}
+
+.map-btn{
+display:block;
+margin:12px 0;
+padding:14px;
+text-align:center;
+border-radius:10px;
+text-decoration:none;
+font-weight:600;
+}
+.yandex{background:#ffcc00;color:black;}
+.gis{background:#00a81f;color:white;}
+
+.trainer{
+background:var(--card);
+padding:18px;
+border-radius:14px;
+margin-bottom:15px;
+}
+.trainer img{
+width:100%;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.contacts a{
+display:block;
+margin:10px 0;
+color:white;
+text-decoration:none;
+}
+
+.admin{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+max-height:60%;
+overflow:auto;
+background:#111;
+padding:20px;
+display:none;
+z-index:2000;
+border-top:2px solid var(--red);
+}
+
+.admin input, .admin textarea{
+width:100%;
+margin:6px 0;
+padding:10px;
+background:#222;
+border:none;
+color:white;
+}
+
+.admin button{
+width:100%;
+padding:12px;
+margin-top:8px;
+background:var(--red);
+border:none;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.delete-btn{
+background:#444;
+margin-top:5px;
+padding:6px;
+font-size:12px;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="secretClick()">САМБО - МЕТРО</div>
+<div class="burger" onclick="toggleMenu()">☰</div>
+</header>
+
+<nav id="menu">
+<a href="#training" onclick="toggleMenu()">Тренировки</a>
+<a href="#hall" onclick="toggleMenu()">О зале</a>
+<a href="#coaches" onclick="toggleMenu()">Тренера</a>
+<a href="#contacts" onclick="toggleMenu()">Контакты</a>
+</nav>
+
+<section id="training">
+<h2>Расписание тренировок</h2>
+
+<div class="banner" id="nextTraining"></div>
+
+<div class="week" id="weekMenu"></div>
+
+<table>
+<thead>
+<tr><th>Дата</th><th>Время</th><th>Тренер</th><th></th></tr>
+</thead>
+<tbody id="scheduleTable"></tbody>
+</table>
+</section>
+
+<section id="hall">
+<h2>О зале</h2>
+<p>Тренировки проводятся на базе фитнес-клуба Metro Fitness, расположенного в шаговой доступности от станции метро «Алма-Атинская». Пространство клуба спроектировано с учётом потребностей как новичков, так и опытных спортсменов: здесь достаточно свободных зон, современное силовое и кардиооборудование, а также грамотно организованный тренировочный процесс без перегруженности в часы пик.</p>
+<a href="https://yandex.ru/maps/213/moscow/?ll=37.758212%2C55.639964&mode=poi&poi%5Bpoint%5D=37.757900%2C55.639779&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D70431279800&z=14.31" target="_blank" class="map-btn yandex">Яндекс Карты</a>
+<a href="https://2gis.ru/moscow/firm/70000001100646683/37.758039%2C55.639703?m=37.758584%2C55.640516%2F17.83" target="_blank" class="map-btn gis">2ГИС</a>
+</section>
+
+<section id="coaches">
+<h2>Тренерский состав</h2>
+<div id="coachList"></div>
+</section>
+
+<section id="contacts">
+<h2>Контакты</h2>
+<div class="contacts">
+<a href="tel:+79999999999">+7 999 999 99 99</a>
+<a href="#">Telegram</a>
+<a href="mailto:sambo@mail.com">sambo@mail.com</a>
+</div>
+</section>
+
+<div class="admin" id="adminPanel">
+<h3 style="display:flex;justify-content:space-between;align-items:center;">
+Админ панель
+<span onclick="closeAdmin()" style="cursor:pointer;font-size:18px;">✕</span>
+</h3>
+
+<button onclick="logoutAdmin()" style="background:#333;margin-bottom:10px;">
+Выйти из админ режима
+</button>
+
+<h4>Добавить тренировку</h4>
+<input id="day" placeholder="День (ПН)">
+<input id="date" placeholder="Дата">
+<input id="time" placeholder="Время">
+<input id="coach" placeholder="Тренер">
+<button onclick="addTraining()">Добавить</button>
+
+<h4>Добавить тренера</h4>
+<input id="coachName" placeholder="ФИО">
+<input id="coachAge" placeholder="Возраст">
+<textarea id="coachDesc" placeholder="Описание"></textarea>
+<input id="coachImg" placeholder="Ссылка на фото">
+<button onclick="addCoach()">Добавить тренера</button>
+</div>
+
+<script>
+const ADMIN_PASSWORD="admin123";
+let clickCount=0;
+let isAdmin=false;
+
+function secretClick(){
+clickCount++;
+if(clickCount>=5){
+const pass=prompt("Введите пароль");
+if(pass===ADMIN_PASSWORD){
+isAdmin=true;
+document.getElementById("adminPanel").style.display="block";
+alert("Админ режим включен");
+renderTable();
+renderCoaches();
+}else{
+alert("Неверный пароль");
+}
+clickCount=0;
+}
+}
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+let schedule=JSON.parse(localStorage.getItem("schedule"))||{
+"ПН":[],"ВТ":[],"СР":[],"ЧТ":[],"ПТ":[],"СБ":[],"ВС":[]
+};
+
+let coaches=JSON.parse(localStorage.getItem("coaches"))||[];
+
+let currentDay="ПН";
+
+function saveData(){
+localStorage.setItem("schedule",JSON.stringify(schedule));
+localStorage.setItem("coaches",JSON.stringify(coaches));
+}
+
+/* ===== WEEK ===== */
+function renderWeek(){
+const w=document.getElementById("weekMenu");
+w.innerHTML="";
+Object.keys(schedule).forEach(d=>{
+const div=document.createElement("div");
+div.innerText=d;
+if(d===currentDay)div.classList.add("active");
+div.onclick=()=>{currentDay=d;renderWeek();renderTable();}
+w.appendChild(div);
+});
+}
+
+/* ===== TABLE ===== */
+function renderTable(){
+const t=document.getElementById("scheduleTable");
+t.innerHTML="";
+
+schedule[currentDay].forEach((item,i)=>{
+t.innerHTML+=`
+<tr>
+<td>${item.date}</td>
+<td>${item.time}</td>
+<td>${item.coach}</td>
+<td>
+${isAdmin ? `<div class="delete-btn" onclick="deleteTraining('${currentDay}', ${i})">Удалить</div>` : ``}
+</td>
+</tr>`;
+});
+renderBanner();
+}
+
+function deleteTraining(day,index){
+if(!isAdmin) return;
+
+schedule[day].splice(index,1);
+
+saveData();
+renderTable();
+renderBanner();
+
+alert("Тренировка удалена");
+}
+
+function closeAdmin(){
+document.getElementById("adminPanel").style.display="none";
+}
+
+function logoutAdmin(){
+isAdmin=false;
+document.getElementById("adminPanel").style.display="none";
+renderTable();
+renderCoaches();
+alert("Вы вышли из админ режима");
+}
+
+
+function renderBanner(){
+
+let allTrainings=[];
+
+Object.keys(schedule).forEach(day=>{
+schedule[day].forEach(training=>{
+allTrainings.push(training);
+});
+});
+
+if(allTrainings.length===0){
+document.getElementById("nextTraining").innerHTML=
+"<p>Ближайших тренировок нет</p>";
+return;
+}
+
+let next=allTrainings[0];
+
+document.getElementById("nextTraining").innerHTML=
+`<h3>${next.date}</h3>
+<p>${next.time}</p>
+<p>Тренер: ${next.coach}</p>
+<button onclick="window.location.href='https://t.me/'">Записаться</button>`;
+}
+
+
+/* ===== ADD TRAINING ===== */
+function addTraining(){
+const dayValue=document.getElementById("day").value.trim();
+const dateValue=document.getElementById("date").value.trim();
+const timeValue=document.getElementById("time").value.trim();
+const coachValue=document.getElementById("coach").value.trim();
+
+if(!schedule[dayValue]){
+alert("Неверный день недели (ПН, ВТ...)");
+return;
+}
+
+schedule[dayValue].push({
+date:dateValue,
+time:timeValue,
+coach:coachValue
+});
+
+saveData();
+renderTable();
+alert("Тренировка добавлена");
+}
+
+
+
+/* ===== COACHES ===== */
+function renderCoaches(){
+const list=document.getElementById("coachList");
+list.innerHTML="";
+coaches.forEach((c,i)=>{
+list.innerHTML+=`
+<div class="trainer">
+<img src="${c.img}">
+<h3>${c.name}</h3>
+<p>Возраст: ${c.age}</p>
+<p>${c.desc}</p>
+${isAdmin ? `<div class="delete-btn" onclick="deleteCoach(${i})">Удалить</div>` : ``}
+</div>`;
+});
+}
+
+function addCoach(){
+if(!isAdmin) return;
+
+coaches.push({
+name:document.getElementById("coachName").value,
+age:document.getElementById("coachAge").value,
+desc:document.getElementById("coachDesc").value,
+img:document.getElementById("coachImg").value
+});
+
+saveData();
+renderCoaches();
+alert("Тренер добавлен");
+}
+
+function deleteCoach(i){
+if(!isAdmin) return;
+coaches.splice(i,1);
+saveData();
+renderCoaches();
+}
+
+renderWeek();
+renderTable();
+renderCoaches();
+</script>
+
+
+</body>
+</html>
