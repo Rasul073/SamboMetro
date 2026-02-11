@@ -271,11 +271,29 @@ function toggleMenu(){
 document.getElementById("menu").classList.toggle("active");
 }
 
-let schedule=JSON.parse(localStorage.getItem("schedule"))||{
-"ПН":[],"ВТ":[],"СР":[],"ЧТ":[],"ПТ":[],"СБ":[],"ВС":[]
+let schedule={
+"ПН":[
+  {date:"12.02.2026", time:"19:00–20:30", coach:"Иванов И.И."}
+],
+"ВТ":[],
+"СР":[
+  {date:"14.02.2026", time:"18:00–19:30", coach:"Петров П.П."}
+],
+"ЧТ":[],
+"ПТ":[],
+"СБ":[],
+"ВС":[]
 };
 
-let coaches=JSON.parse(localStorage.getItem("coaches"))||[];
+let coaches=[
+{
+  name:"Иванов Иван",
+  age:"35",
+  desc:"Мастер спорта по самбо",
+  img:"https://s5.iimage.su/s/11/gn8sTRoxi5HiJiEj5ME8ndel65P5hnqfdwtPlrtV.jpg"
+}
+];
+
 
 let currentDay="ПН";
 
@@ -438,3 +456,4 @@ renderCoaches();
 
 </body>
 </html>
+
