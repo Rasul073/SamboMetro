@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Самбо - Метро</title>
+<title>Самбо – Метро</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -17,7 +17,6 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif;}
-
 body{background:var(--dark);color:white;}
 
 header{
@@ -32,7 +31,7 @@ padding:16px;
 z-index:1000;
 }
 
-.logo{font-weight:700;cursor:pointer;}
+.logo{font-weight:700;}
 .burger{font-size:22px;cursor:pointer;}
 
 nav{
@@ -96,18 +95,6 @@ font-size:13px;
 th{background:var(--red);padding:10px;}
 td{border-top:1px solid #2b2b35;padding:10px;text-align:center;}
 
-.map-btn{
-display:block;
-margin:12px 0;
-padding:14px;
-text-align:center;
-border-radius:10px;
-text-decoration:none;
-font-weight:600;
-}
-.yandex{background:#ffcc00;color:black;}
-.gis{background:#00a81f;color:white;}
-
 .trainer{
 background:var(--card);
 padding:18px;
@@ -120,60 +107,23 @@ border-radius:12px;
 margin-bottom:10px;
 }
 
-.contacts a{
+.map-btn{
 display:block;
-margin:10px 0;
-color:white;
+margin:12px 0;
+padding:14px;
+text-align:center;
+border-radius:10px;
 text-decoration:none;
-}
-
-.admin{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-max-height:60%;
-overflow:auto;
-background:#111;
-padding:20px;
-display:none;
-z-index:2000;
-border-top:2px solid var(--red);
-}
-
-.admin input, .admin textarea{
-width:100%;
-margin:6px 0;
-padding:10px;
-background:#222;
-border:none;
-color:white;
-}
-
-.admin button{
-width:100%;
-padding:12px;
-margin-top:8px;
-background:var(--red);
-border:none;
-color:white;
 font-weight:600;
-cursor:pointer;
 }
-
-.delete-btn{
-background:#444;
-margin-top:5px;
-padding:6px;
-font-size:12px;
-cursor:pointer;
-}
+.yandex{background:#ffcc00;color:black;}
+.gis{background:#00a81f;color:white;}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo" >САМБО - МЕТРО</div>
+<div class="logo">САМБО – МЕТРО</div>
 <div class="burger" onclick="toggleMenu()">☰</div>
 </header>
 
@@ -188,12 +138,11 @@ cursor:pointer;
 <h2>Расписание тренировок</h2>
 
 <div class="banner" id="nextTraining"></div>
-
 <div class="week" id="weekMenu"></div>
 
 <table>
 <thead>
-<tr><th>Дата</th><th>Время</th><th>Тренер</th><th></th></tr>
+<tr><th>Дата</th><th>Время</th><th>Тренер</th></tr>
 </thead>
 <tbody id="scheduleTable"></tbody>
 </table>
@@ -201,9 +150,9 @@ cursor:pointer;
 
 <section id="hall">
 <h2>О зале</h2>
-<p>Тренировки проводятся на базе фитнес-клуба Metro Fitness, расположенного в шаговой доступности от станции метро «Алма-Атинская». Пространство клуба спроектировано с учётом потребностей как новичков, так и опытных спортсменов: здесь достаточно свободных зон, современное силовое и кардиооборудование, а также грамотно организованный тренировочный процесс без перегруженности в часы пик.</p>
-<a href="https://yandex.ru/maps/213/moscow/?ll=37.758212%2C55.639964&mode=poi&poi%5Bpoint%5D=37.757900%2C55.639779&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D70431279800&z=14.31" target="_blank" class="map-btn yandex">Яндекс Карты</a>
-<a href="https://2gis.ru/moscow/firm/70000001100646683/37.758039%2C55.639703?m=37.758584%2C55.640516%2F17.83" target="_blank" class="map-btn gis">2ГИС</a>
+<p>Тренировки проходят в фитнес-клубе Metro Fitness рядом с метро «Алма-Атинская».</p>
+<a class="map-btn yandex" href="https://yandex.ru/maps/" target="_blank">Яндекс Карты</a>
+<a class="map-btn gis" href="https://2gis.ru/" target="_blank">2ГИС</a>
 </section>
 
 <section id="coaches">
@@ -213,27 +162,18 @@ cursor:pointer;
 
 <section id="contacts">
 <h2>Контакты</h2>
-<div class="contacts">
 <a href="tel:+79999999999">+7 999 999 99 99</a>
-<a href="#">Telegram</a>
-<a href="mailto:sambo@mail.com">sambo@mail.com</a>
-</div>
 </section>
 
 <script>
-
 function toggleMenu(){
 document.getElementById("menu").classList.toggle("active");
 }
 
 let schedule={
-"ПН":[
-  {date:"12.02.2026", time:"19:00–20:30", coach:"Иванов И.И."}
-],
+"ПН":[{date:"12.02.2026",time:"19:00–20:30",coach:"Иванов И.И."}],
 "ВТ":[],
-"СР":[
-  {date:"14.02.2026", time:"18:00–19:30", coach:"Петров П.П."}
-],
+"СР":[{date:"14.02.2026",time:"18:00–19:30",coach:"Петров П.П."}],
 "ЧТ":[],
 "ПТ":[],
 "СБ":[],
@@ -242,83 +182,53 @@ let schedule={
 
 let coaches=[
 {
-  name:"Иванов Иван",
-  age:"35",
-  desc:"Мастер спорта по самбо",
-  img:"https://s5.iimage.su/s/11/gn8sTRoxi5HiJiEj5ME8ndel65P5hnqfdwtPlrtV.jpg"
+name:"Иванов Иван",
+age:"35",
+desc:"Мастер спорта по самбо",
+img:"https://s5.iimage.su/s/11/gn8sTRoxi5HiJiEj5ME8ndel65P5hnqfdwtPlrtV.jpg"
 }
 ];
 
-
 let currentDay="ПН";
 
-
-
-/* ===== WEEK ===== */
 function renderWeek(){
 const w=document.getElementById("weekMenu");
 w.innerHTML="";
 Object.keys(schedule).forEach(d=>{
 const div=document.createElement("div");
-div.innerText=d;
+div.textContent=d;
 if(d===currentDay)div.classList.add("active");
 div.onclick=()=>{currentDay=d;renderWeek();renderTable();}
 w.appendChild(div);
 });
 }
 
-/* ===== TABLE ===== */
-function renderTablefunction renderTable(){
+function renderTable(){
 const t=document.getElementById("scheduleTable");
 t.innerHTML="";
-
 schedule[currentDay].forEach(item=>{
 t.innerHTML+=`
 <tr>
 <td>${item.date}</td>
 <td>${item.time}</td>
 <td>${item.coach}</td>
-<td></td>
 </tr>`;
 });
-
 renderBanner();
 }
 
-
 function renderBanner(){
-
-let allTrainings=[];
-
-Object.keys(schedule).forEach(day=>{
-schedule[day].forEach(training=>{
-allTrainings.push(training);
-});
-});
-
-if(allTrainings.length===0){
+const all=[];
+Object.values(schedule).forEach(day=>day.forEach(t=>all.push(t)));
 document.getElementById("nextTraining").innerHTML=
-"<p>Ближайших тренировок нет</p>";
-return;
+all.length
+? `<h3>${all[0].date}</h3><p>${all[0].time}</p><p>Тренер: ${all[0].coach}</p>`
+: "<p>Ближайших тренировок нет</p>";
 }
 
-let next=allTrainings[0];
-
-document.getElementById("nextTraining").innerHTML=
-`<h3>${next.date}</h3>
-<p>${next.time}</p>
-<p>Тренер: ${next.coach}</p>
-<button onclick="window.location.href='https://t.me/'">Записаться</button>`;
-}
-
-
-/* ===== ADD TRAINING ===== */
-
-/* ===== COACHES ===== */
 function renderCoaches(){
 const list=document.getElementById("coachList");
 list.innerHTML="";
-
 coaches.forEach(c=>{
 list.innerHTML+=`
 <div class="trainer">
@@ -333,7 +243,6 @@ list.innerHTML+=`
 renderWeek();
 renderTable();
 renderCoaches();
-
 </script>
 
 </body>
