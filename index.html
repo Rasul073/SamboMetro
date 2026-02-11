@@ -220,52 +220,7 @@ cursor:pointer;
 </div>
 </section>
 
-<div class="admin" id="adminPanel">
-<h3 style="display:flex;justify-content:space-between;align-items:center;">
-Админ панель
-<span onclick="closeAdmin()" style="cursor:pointer;font-size:18px;">✕</span>
-</h3>
-
-<button onclick="logoutAdmin()" style="background:#333;margin-bottom:10px;">
-Выйти из админ режима
-</button>
-
-<h4>Добавить тренировку</h4>
-<input id="day" placeholder="День (ПН)">
-<input id="date" placeholder="Дата">
-<input id="time" placeholder="Время">
-<input id="coach" placeholder="Тренер">
-<button onclick="addTraining()">Добавить</button>
-
-<h4>Добавить тренера</h4>
-<input id="coachName" placeholder="ФИО">
-<input id="coachAge" placeholder="Возраст">
-<textarea id="coachDesc" placeholder="Описание"></textarea>
-<input id="coachImg" placeholder="Ссылка на фото">
-<button onclick="addCoach()">Добавить тренера</button>
-</div>
-
 <script>
-const ADMIN_PASSWORD="admin123";
-let clickCount=0;
-let isAdmin=false;
-
-function secretClick(){
-clickCount++;
-if(clickCount>=5){
-const pass=prompt("Введите пароль");
-if(pass===ADMIN_PASSWORD){
-isAdmin=true;
-document.getElementById("adminPanel").style.display="block";
-alert("Админ режим включен");
-renderTable();
-renderCoaches();
-}else{
-alert("Неверный пароль");
-}
-clickCount=0;
-}
-}
 
 function toggleMenu(){
 document.getElementById("menu").classList.toggle("active");
@@ -334,31 +289,6 @@ ${isAdmin ? `<div class="delete-btn" onclick="deleteTraining('${currentDay}', ${
 renderBanner();
 }
 
-function deleteTraining(day,index){
-if(!isAdmin) return;
-
-schedule[day].splice(index,1);
-
-saveData();
-renderTable();
-renderBanner();
-
-alert("Тренировка удалена");
-}
-
-function closeAdmin(){
-document.getElementById("adminPanel").style.display="none";
-}
-
-function logoutAdmin(){
-isAdmin=false;
-document.getElementById("adminPanel").style.display="none";
-renderTable();
-renderCoaches();
-alert("Вы вышли из админ режима");
-}
-
-
 function renderBanner(){
 
 let allTrainings=[];
@@ -386,29 +316,6 @@ document.getElementById("nextTraining").innerHTML=
 
 
 /* ===== ADD TRAINING ===== */
-function addTraining(){
-const dayValue=document.getElementById("day").value.trim();
-const dateValue=document.getElementById("date").value.trim();
-const timeValue=document.getElementById("time").value.trim();
-const coachValue=document.getElementById("coach").value.trim();
-
-if(!schedule[dayValue]){
-alert("Неверный день недели (ПН, ВТ...)");
-return;
-}
-
-schedule[dayValue].push({
-date:dateValue,
-time:timeValue,
-coach:coachValue
-});
-
-saveData();
-renderTable();
-alert("Тренировка добавлена");
-}
-
-
 
 /* ===== COACHES ===== */
 function renderCoaches(){
@@ -426,34 +333,15 @@ ${isAdmin ? `<div class="delete-btn" onclick="deleteCoach(${i})">Удалить<
 });
 }
 
-function addCoach(){
-if(!isAdmin) return;
-
-coaches.push({
-name:document.getElementById("coachName").value,
-age:document.getElementById("coachAge").value,
-desc:document.getElementById("coachDesc").value,
-img:document.getElementById("coachImg").value
-});
-
 saveData();
 renderCoaches();
 alert("Тренер добавлен");
 }
 
-function deleteCoach(i){
-if(!isAdmin) return;
-coaches.splice(i,1);
-saveData();
-renderCoaches();
-}
-
-renderWeek();
-renderTable();
-renderCoaches();
 </script>
 
 
 </body>
 </html>
+
 
