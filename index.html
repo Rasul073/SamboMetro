@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Самбо – Метро</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--red:#c40010;
+--dark:#0f0f14;
+--card:#1a1a22;
+--gray:#2b2b35;
+--yellow:#f2b705;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+body{background:var(--dark);color:white;}
+
+header{
+position:fixed;
+top:0;
+width:100%;
+background:linear-gradient(90deg,#7a0008,var(--red));
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px;
+z-index:1000;
+}
+
+.logo{font-weight:700;}
+.burger{font-size:22px;cursor:pointer;}
+
+nav{
+position:fixed;
+top:0;
+right:-100%;
+width:70%;
+height:100%;
+background:#111;
+padding:90px 25px;
+transition:0.3s;
+}
+nav.active{right:0;}
+nav a{
+display:block;
+margin:20px 0;
+color:white;
+text-decoration:none;
+font-weight:600;
+}
+
+section{padding:95px 20px 50px;}
+h2{margin-bottom:20px;font-weight:700;}
+
+.banner{
+background:linear-gradient(145deg,#7a0008,var(--red));
+padding:25px;
+border-radius:16px;
+margin-bottom:25px;
+}
+
+.week{display:flex;overflow-x:auto;margin-bottom:15px;}
+.week div{
+padding:10px 14px;
+background:var(--gray);
+margin-right:8px;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+}
+.week .active{background:var(--red);}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:var(--card);
+border-radius:12px;
+overflow:hidden;
+font-size:13px;
+}
+th{background:var(--red);padding:10px;}
+td{border-top:1px solid #2b2b35;padding:10px;text-align:center;}
+
+.trainer{
+background:var(--card);
+padding:18px;
+border-radius:14px;
+margin-bottom:15px;
+}
+.trainer img{
+width:100%;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.map-btn{
+display:block;
+margin:12px 0;
+padding:14px;
+text-align:center;
+border-radius:10px;
+text-decoration:none;
+font-weight:600;
+}
+.yandex{background:#ffcc00;color:black;}
+.gis{background:#00a81f;color:white;}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">САМБО – МЕТРО</div>
+<div class="burger" onclick="toggleMenu()">☰</div>
+</header>
+
+<nav id="menu">
+<a href="#training" onclick="toggleMenu()">Тренировки</a>
+<a href="#hall" onclick="toggleMenu()">О зале</a>
+<a href="#coaches" onclick="toggleMenu()">Тренера</a>
+<a href="#contacts" onclick="toggleMenu()">Контакты</a>
+</nav>
+
+<section id="training">
+<h2>Расписание тренировок</h2>
+
+<div class="banner" id="nextTraining"></div>
+<div class="week" id="weekMenu"></div>
+
+<table>
+<thead>
+<tr><th>Дата</th><th>Время</th><th>Тренер</th></tr>
+</thead>
+<tbody id="scheduleTable"></tbody>
+</table>
+</section>
+
+<section id="hall">
+<h2>О зале</h2>
+<p>Тренировки проходят в фитнес-клубе Metro Fitness рядом с метро «Алма-Атинская».</p>
+<a class="map-btn yandex" href="https://yandex.ru/maps/" target="_blank">Яндекс Карты</a>
+<a class="map-btn gis" href="https://2gis.ru/" target="_blank">2ГИС</a>
+</section>
+
+<section id="coaches">
+<h2>Тренерский состав</h2>
+<div id="coachList"></div>
+</section>
+
+<section id="contacts">
+<h2>Контакты</h2>
+<a href="tel:+79999999999">+7 999 999 99 99</a>
+</section>
+
+<script>
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+/* ===== ДАННЫЕ (РЕДАКТИРУЕШЬ ТУТ) ===== */
+
+let schedule={
+"ПН":[
+ {date:"12.02.2026", time:"19:00–20:30", coach:"Иванов И.И."}
+],
+"ВТ":[],
+"СР":[
+ {date:"14.02.2026", time:"18:00–19:30", coach:"Петров П.П."}
+],
+"ЧТ":[],
+"ПТ":[],
+"СБ":[],
+"ВС":[]
+};
+
+let coaches=[
+{
+name:"Иванов Иван",
+age:"35",
+desc:"Мастер спорта по самбо",
+img:"https://s5.iimage.su/s/11/gn8sTRoxi5HiJiEj5ME8ndel65P5hnqfdwtPlrtV.jpg"
+}
+];
+
+/* ===== ЛОГИКА ===== */
+
+let currentDay="ПН";
+
+function renderWeek(){
+const w=document.getElementById("weekMenu");
+w.innerHTML="";
+Object.keys(schedule).forEach(d=>{
+const div=document.createElement("div");
+div.textContent=d;
+if(d===currentDay)div.classList.add("active");
+div.onclick=()=>{currentDay=d;renderWeek();renderTable();}
+w.appendChild(div);
+});
+}
+
+function renderTable(){
+const t=document.getElementById("scheduleTable");
+t.innerHTML="";
+schedule[currentDay].forEach(item=>{
+t.innerHTML+=`
+<tr>
+<td>${item.date}</td>
+<td>${item.time}</td>
+<td>${item.coach}</td>
+</tr>`;
+});
+renderBanner();
+}
+
+function renderBanner(){
+let all=[];
+Object.values(schedule).forEach(day=>day.forEach(t=>all.push(t)));
+document.getElementById("nextTraining").innerHTML=
+all.length
+? `<h3>${all[0].date}</h3><p>${all[0].time}</p><p>Тренер: ${all[0].coach}</p>`
+: "<p>Ближайших тренировок нет</p>";
+}
+
+function renderCoaches(){
+const list=document.getElementById("coachList");
+list.innerHTML="";
+coaches.forEach(c=>{
+list.innerHTML+=`
+<div class="trainer">
+<img src="${c.img}">
+<h3>${c.name}</h3>
+<p>Возраст: ${c.age}</p>
+<p>${c.desc}</p>
+</div>`;
+});
+}
+
+/* ===== ЗАПУСК ===== */
+renderWeek();
+renderTable();
+renderCoaches();
+</script>
+
+</body>
+</html>
